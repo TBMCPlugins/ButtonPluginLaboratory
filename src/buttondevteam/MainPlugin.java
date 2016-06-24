@@ -5,9 +5,12 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import buttondevteam.alisolarflare.aliarrowtrail.AliArrowListener;
+
 public class MainPlugin extends JavaPlugin{
 	private PluginDescriptionFile pdfFile;
 	private Logger logger;
+	private AliArrowListener aliArrowListener;
 	
 	public void onEnable(){
 		//Logs "Plugin Enabled", registers commands
@@ -31,7 +34,8 @@ public class MainPlugin extends JavaPlugin{
 		//Example Event: getServer().getPluginManager().registerEvents(midnightListener, this);
 		
 		//INIT
-		
+		aliArrowListener = new AliArrowListener(this);
 		//EVENTS
+		getServer().getPluginManager().registerEvents(aliArrowListener, this);
 	}
 }
