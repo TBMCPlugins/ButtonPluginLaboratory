@@ -5,19 +5,21 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import buttondevteam.alisolarflare.aliarrowtrail.AliArrowListener;
+import buttondevteam.alisolarflare.discordbot.DiscordSubPlugin;
+import buttondevteam.alisolarflare.iiewar.IieWarSubPlugin;
 
 public class MainPlugin extends JavaPlugin{
 	private PluginDescriptionFile pdfFile;
 	private Logger logger;
-	private AliArrowListener aliArrowListener;
-	
+	private DiscordSubPlugin discordSubPlugin;
+	private IieWarSubPlugin iieWarSubPlugin;
 	public void onEnable(){
 		//Logs "Plugin Enabled", registers commands
 		pdfFile = getDescription();
 		logger = getLogger();
 		logger.info(pdfFile.getName() + " has been started (V." + pdfFile.getVersion()+ ").");
-				
+		
+		registerSubPlugins();
 		registerCommands();
 		registerEvents();
 				
@@ -26,16 +28,17 @@ public class MainPlugin extends JavaPlugin{
 	public void onDisable(){
 		logger.info(pdfFile.getName() + " has been Disabled (V." + pdfFile.getVersion()+ ").");
 	}
+	public void registerSubPlugins(){
+		discordSubPlugin = new DiscordSubPlugin(this);
+		iieWarSubPlugin = new IieWarSubPlugin(this);
+		
+		discordSubPlugin.register();
+		iieWarSubPlugin.register();
+	}
 	public void registerCommands(){
 		//Example command: getCommand("createShrine").setExecutor(new CreateShrine(this));
 	}
-	public void registerEvents(){
-		//Example INIT: midnightListener = new MidnightListener(this);
-		//Example Event: getServer().getPluginManager().registerEvents(midnightListener, this);
-		
-		//INIT
-		aliArrowListener = new AliArrowListener(this);
+	public void registerEvents(){		
 		//EVENTS
-		getServer().getPluginManager().registerEvents(aliArrowListener, this);
 	}
 }
